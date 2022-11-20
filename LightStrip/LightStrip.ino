@@ -49,7 +49,7 @@ std::vector<Piece> pieceArray;
 
 
 void setup() {
-	Serial.begin(9600);
+	Serial.begin(115200);
 
 	setup_wifi();
 
@@ -68,9 +68,7 @@ void setup() {
 	lightsMgr.clear();
 
 
-	mqttData.set("progNr","1");
-	mqttData.set("startPos", "0");
-	mqttData.set("endPos", "300");
+
 }
 
 
@@ -85,8 +83,14 @@ void loop() {
 		Piece lightPiece = Piece(&lightsMgr);
 		lightPiece.init(&mqttData);
 		pieceArray.push_back(lightPiece);
+		mqttData.set("progNr", "1");
+		mqttData.set("startPos", "0");
+		mqttData.set("endPos", "300");
 	}
 	
+	if (mqttData.getValue("play") == "reset") { pieceArray.clear(); lightsMgr.clear(); }
+	if (mqttData.getValue("play") == "data") { mqttData.serialPrint(); mqttPublish("NULL", "lightstrip/value/play");}
+
 	for (size_t i = 0; i < pieceArray.size(); i++)
 	{
 		pieceArray[i].process();
@@ -97,7 +101,7 @@ void loop() {
 }
 
 bool play() {
-	if (mqttData.getValue("play") == "true") return true; 
+	if (mqttData.getValue("play") == "play") return true; 
 	else return false;
 }
 
