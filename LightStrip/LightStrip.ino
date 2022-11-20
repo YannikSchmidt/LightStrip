@@ -79,18 +79,18 @@ void loop() {
 	client.loop();
 
 	if (play()) {
+		Serial.println("[PLAY:");
 		mqttData.serialPrint();
 		Piece lightPiece = Piece(&lightsMgr);
 		lightPiece.init(&mqttData);
 		pieceArray.push_back(lightPiece);
-		mqttData.set("progNr", "1");
-		mqttData.set("startPos", "0");
-		mqttData.set("endPos", "300");
+		Serial.println("]");
 	}
 	
 	if (mqttData.getValue("play") == "reset") { pieceArray.clear(); lightsMgr.clear(); }
-	if (mqttData.getValue("play") == "data") { mqttData.serialPrint(); mqttPublish("NULL", "lightstrip/value/play");}
+	if (mqttData.getValue("play") == "data") { Serial.println("[Debug Data:"); mqttData.serialPrint(); mqttPublish("NULL", "lightstrip/value/play"); Serial.println("]"); }
 
+	lightsMgr.clear(false);
 	for (size_t i = 0; i < pieceArray.size(); i++)
 	{
 		pieceArray[i].process();

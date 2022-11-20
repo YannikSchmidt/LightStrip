@@ -19,13 +19,20 @@
 #define __ets__ 1
 #define ICACHE_FLASH 1
 #define _GNU_SOURCE 1
+#define MMU_IRAM_SIZE 0x8000
+#define MMU_ICACHE_SIZE 0x8000
 #define NONOSDK22x_190703 1
-#define F_CPU {build.f_cpu}
+#define F_CPU 80000000L
 #define LWIP_OPEN_SRC 1
+#define TCP_MSS 536
+#define LWIP_FEATURES 1
+#define LWIP_IPV6 0
 #define ARDUINO 108019
 #define ARDUINO_ESP8266_GENERIC 1
 #define ARDUINO_ARCH_ESP8266 1
 #define ARDUINO_BOARD "ESP8266_GENERIC"
+#define LED_BUILTIN 2
+#define FLASHMODE_DOUT 1
 #define ESP8266 1
 #define __cplusplus 201103L
 #undef __cplusplus
